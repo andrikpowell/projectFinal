@@ -34,7 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidFinishLaunching(_ application: UIApplication) {
         let defaults = UserDefaults.standard
         let defaultValue = ["playerName" : " "]
+        let defaultScore = ["highScore" : 0 ]
         defaults.register(defaults: defaultValue)
+        defaults.register(defaults: defaultScore)
         /*
         let hsDefaults = UserDefaults.standard
         let hsDefaultValue = ["highScore" : 30]

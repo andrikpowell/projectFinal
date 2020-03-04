@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var isTimerRunning:Bool = false //This will be used to make sure only one timer is created at a time.
     var chars:Int = 0
     var token:String = ""
-    var hsToken:Int = 30
+    var hsToken:Int = 0
     var nature1 = false
     var nature2 = false
     var nature3 = false
@@ -55,7 +55,6 @@ class ViewController: UIViewController {
         let anIndex = indexes.remove(at: randomIndex)
         return questionArray[anIndex].0;
     }
- 
  */
     
 /* OUTLETS */
@@ -433,14 +432,12 @@ class ViewController: UIViewController {
     @objc func homeScreen() {
         let defaults = UserDefaults.standard
         let token = defaults.string(forKey: "playerName")!
-        /*
-        let hsDefaults = UserDefaults.standard
-        let hsToken = hsDefaults.integer(forKey: "highScore")
-        PreviousHighScoreLabel.text = "High Score: \(hsToken)"
-         */
+        let hsToken = defaults.integer(forKey: "highScore")
         areQuestionsDone = false
         welcomeLabel.text = "Welcome, \(token)"
         homeScoreNumberLabel.text = "\(score)"
+/* GLOBAL HIGH SCORE LINE: */
+        //homeScoreNumberLabel.text = "\(hsToken)"
         setView(view: nameLabel, hidden: true)
         setView(view: nameDisclaimerLabel1, hidden: true)
         setView(view: nameDisclaimerLabel2, hidden: true)
@@ -477,6 +474,7 @@ class ViewController: UIViewController {
         setView(view: homeScoreLabel, hidden: true)
         setView(view: homeScoreNumberLabel, hidden: true)
         seconds = 40
+        score = 0
     }
 
     @objc func questionScreen() {
@@ -531,7 +529,6 @@ class ViewController: UIViewController {
         q2redButton.backgroundColor = UIColor.systemRed
         q4textField.text = ""
         chars = 0
-        
         nature1 = false
         nature2 = false
         nature3 = false
@@ -548,6 +545,18 @@ class ViewController: UIViewController {
         welcomeLabel.text = "Try Again?"
         descriptionLabel.text = ""
         finalScoreNumberLabel.text = "\(score)"
+/* TRYING TO FIGURE OUT HOW TO DO GLOBAL HIGH SCORE VARIABLE */
+        /*
+        let defaults = UserDefaults.standard
+        let hsToken = defaults.integer(forKey: "highScore")
+        finalScoreNumberLabel.text = "\(hsToken)"
+        if(score > hsToken) {
+            defaults.set(hsToken, forKey: "highScore")
+        }
+        else {
+            score = 0
+        }
+        */
         questionClear()
         setView(view: tryAgainButton, hidden: false)
         setView(view: questionSubmitButton, hidden: true)
@@ -560,21 +569,6 @@ class ViewController: UIViewController {
         setView(view: finalScoreLabel, hidden: false)
         setView(view: finalScoreNumberLabel, hidden: false)
         setView(view: backHomeButton, hidden: false)
-        
-/* TRYING TO FIGURE OUT HOW TO DO GLOBAL HIGH SCORE VARIABLE */
-
-        /*
-        let hsDefaults = UserDefaults.standard
-        let hsToken = hsDefaults.integer(forKey: "highScore")
-        PreviousHighScoreLabel.text = "High Score: \(hsToken)"
-         
-        if(score > hsToken) {
-            hsDefaults.set(hsToken, forKey: "highScore")
-        }
-        else {
-            score = 0
-        }
-        */
     }
     
 /* BUTTON ACTIONS */
@@ -637,15 +631,6 @@ class ViewController: UIViewController {
                fn4!(self)()
                let fn5 = dictionaryOfFunctions["question5"]
                fn5!(self)()
-        */
-
-/* TRYING TO FIGURE OUT HOW TO DO GLOBAL HIGH SCORE VARIABLE */
-
-        /*
-        let hsDefaults = UserDefaults.standard
-        let hsToken = hsDefaults.integer(forKey: "highScore")
-        PreviousHighScoreLabel.text = "High Score: \(hsToken)"
-        Do any additional setup after loading the view.
         */
 
     }
