@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         "question5": question5,
     ]
     var indexes = [Int]();
-    func randomQuestion() -> self
+    func randomQuestion() -> func
     {
         if indexes.count == 0
         {
@@ -136,7 +136,6 @@ class ViewController: UIViewController {
              nature4 = true
          }
     }
-    
 
     @objc func q1nature1ImageSelect()
      {
@@ -561,6 +560,9 @@ class ViewController: UIViewController {
         setView(view: finalScoreLabel, hidden: false)
         setView(view: finalScoreNumberLabel, hidden: false)
         setView(view: backHomeButton, hidden: false)
+        
+/* TRYING TO FIGURE OUT HOW TO DO GLOBAL HIGH SCORE VARIABLE */
+
         /*
         let hsDefaults = UserDefaults.standard
         let hsToken = hsDefaults.integer(forKey: "highScore")
@@ -622,6 +624,7 @@ class ViewController: UIViewController {
         q1nature3BG.addGestureRecognizer(tap3)
         q1nature4BG.addGestureRecognizer(tap4)
 
+/* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS */
 
         /*
                let fn1 = questionArray[0]
@@ -635,7 +638,9 @@ class ViewController: UIViewController {
                let fn5 = dictionaryOfFunctions["question5"]
                fn5!(self)()
         */
-        
+
+/* TRYING TO FIGURE OUT HOW TO DO GLOBAL HIGH SCORE VARIABLE */
+
         /*
         let hsDefaults = UserDefaults.standard
         let hsToken = hsDefaults.integer(forKey: "highScore")
