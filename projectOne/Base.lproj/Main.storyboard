@@ -202,13 +202,6 @@
                                     <action selector="q1nature3Action:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E0r-sp-9IV"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="High Score: " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zeI-mR-xFu">
-                                <rect key="frame" x="9" y="73" width="395" height="72"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow.up.to.line.alt" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Tzb-nP-ndc">
                                 <rect key="frame" x="273" y="409" width="37" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -395,7 +388,6 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="PreviousHighScoreLabel" destination="zeI-mR-xFu" id="piW-ib-hTN"/>
                         <outlet property="TimerLabel" destination="zuA-6w-NBA" id="sYG-xh-nwN"/>
                         <outlet property="anxietyLabel" destination="MSP-li-9Pv" id="RFh-5i-Tgd"/>
                         <outlet property="backHomeButton" destination="aaa-bS-er4" id="Gx2-a1-hsr"/>

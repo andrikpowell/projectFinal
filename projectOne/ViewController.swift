@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 /* VARIABLES AND OUTLETS */
     var score:Int = 0
     var timer = Timer()
-    var seconds = 40 //This variable will hold a starting value of seconds. It could be any amount above 0.
+    var timerSeconds = 80 //This variable will hold a starting value of seconds. It could be any amount above 0.
     var isTimerRunning:Bool = false //This will be used to make sure only one timer is created at a time.
     var chars:Int = 0
     var token:String = ""
@@ -83,7 +83,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var q1nature4BG: UIImageView!
     @IBOutlet weak var questionSubmitButton: UIButton!
     @IBOutlet weak var questionWrongLabel: UILabel!
-    @IBOutlet weak var PreviousHighScoreLabel: UILabel!
     @IBOutlet weak var questionGoodJobLabel: UILabel!
     @IBOutlet weak var finalScoreLabel: UILabel!
     @IBOutlet weak var finalScoreNumberLabel: UILabel!
@@ -181,48 +180,30 @@ class ViewController: UIViewController {
     
     @IBAction func q2purpleButtonAction(_ sender: UIButton) {
         if(questionNumber == 3) {
-            setView(view: questionWrongLabel, hidden: false)
-            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                self.setView(view: self.questionWrongLabel, hidden: true)
-            }
+            wrongAnswer()
         }
         else if(questionNumber == 5) {
-            setView(view: questionWrongLabel, hidden: false)
-            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                self.setView(view: self.questionWrongLabel, hidden: true)
-        }
+            wrongAnswer()
         }
 
     }
     @IBAction func q2greenButtonAction(_ sender: UIButton) {
         if(questionNumber == 3) {
-            setView(view: questionWrongLabel, hidden: false)
-            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                self.setView(view: self.questionWrongLabel, hidden: true)
-            }
+            wrongAnswer()
         }
         else if(questionNumber == 5) {
             didScore(points:10)
             question1()
-            setView(view: questionGoodJobLabel, hidden: false)
-             Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                 self.setView(view: self.questionGoodJobLabel, hidden: true)
-        }
+            correctAnswer()
         }
     }
     
     @IBAction func q2redButtonAction(_ sender: UIButton) {
         if(questionNumber == 3) {
-            setView(view: questionWrongLabel, hidden: false)
-            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                self.setView(view: self.questionWrongLabel, hidden: true)
-            }
+            wrongAnswer()
         }
         else if(questionNumber == 5) {
-            setView(view: questionWrongLabel, hidden: false)
-            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                self.setView(view: self.questionWrongLabel, hidden: true)
-        }
+            wrongAnswer()
         }
 
     }
@@ -231,16 +212,10 @@ class ViewController: UIViewController {
         if(questionNumber == 3) {
             didScore(points:10)
             question4()
-            setView(view: questionGoodJobLabel, hidden: false)
-             Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                 self.setView(view: self.questionGoodJobLabel, hidden: true)
-            }
+            correctAnswer()
         }
         else if(questionNumber == 5) {
-            setView(view: questionWrongLabel, hidden: false)
-            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                self.setView(view: self.questionWrongLabel, hidden: true)
-        }
+            wrongAnswer()
         }
     }
     
@@ -274,13 +249,17 @@ class ViewController: UIViewController {
     }
     
     @objc func updateTimer() {
-        seconds -= 1     //This will decrement(count down)the seconds.
-        TimerLabel.text = timeString(time: TimeInterval(seconds))  //This will update the label.
-        if(seconds == 0) {
+        timerSeconds -= 1     //This will decrement(count down)the seconds.
+        TimerLabel.text = timeString(time: TimeInterval(timerSeconds))  //This will update the label.
+        if(timerSeconds == 0) {
             timer.invalidate()
             tryAgainScreen()
         }
-    }
+        else if(timerSeconds <= 20) {
+            self.TimerLabel.textColor = UIColor.systemRed
+            //self.anxietyLabel.textColor = UIColor.systemRed
+        }
+}
 
 /* SLIDER CODE */
 
@@ -305,18 +284,11 @@ class ViewController: UIViewController {
             {
                 didScore(points:10)
                 question2()
-                setView(view: questionGoodJobLabel, hidden: false)
-                Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                    self.setView(view: self.questionGoodJobLabel, hidden: true)
-                }
+                correctAnswer()
             }
             else
             {
-                //questionWrongLabel.isHidden = false
-                setView(view: questionWrongLabel, hidden: false)
-                Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                    self.setView(view: self.questionWrongLabel, hidden: true)
-                }
+                wrongAnswer()
             }
         }
         else if(questionNumber == 2) {
@@ -324,18 +296,12 @@ class ViewController: UIViewController {
             {
                 didScore(points:10)
                 question3()
-                setView(view: questionGoodJobLabel, hidden: false)
-                 Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                     self.setView(view: self.questionGoodJobLabel, hidden: true)
-                 }
+                correctAnswer()
 
             }
             else
             {
-                setView(view: questionWrongLabel, hidden: false)
-                Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                    self.setView(view: self.questionWrongLabel, hidden: true)
-                }
+                wrongAnswer()
             }
         }
             if(questionNumber == 4) {
@@ -344,17 +310,10 @@ class ViewController: UIViewController {
                 if (chars == 6) {
                     didScore(points:10)
                     question5()
-                    setView(view: questionGoodJobLabel, hidden: false)
-                     Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                         self.setView(view: self.questionGoodJobLabel, hidden: true)
-                     }
+                    correctAnswer()
                 }
                     else {
-                        setView(view: questionWrongLabel, hidden: false)
-                        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                            self.setView(view: self.questionWrongLabel, hidden: true)
-                        }
-
+                    wrongAnswer()
                     }
 
             }
@@ -453,7 +412,7 @@ class ViewController: UIViewController {
         setView(view: backHomeButton, hidden: true)
         setView(view: homeScoreLabel, hidden: false)
         setView(view: homeScoreNumberLabel, hidden: false)
-        seconds = 40
+        timerReset()
     }
     
     @objc func introScreen() {
@@ -473,15 +432,16 @@ class ViewController: UIViewController {
         setView(view: backHomeButton, hidden: true)
         setView(view: homeScoreLabel, hidden: true)
         setView(view: homeScoreNumberLabel, hidden: true)
-        seconds = 40
+        timerReset()
         score = 0
     }
 
     @objc func questionScreen() {
-        seconds = 40
+        timerReset()
         score = 0
         areQuestionsDone = false
         scoreLabel.text = "\(score)"
+        TimerLabel.text = timeString(time: TimeInterval(timerSeconds))  //This will update the label.
         if isTimerRunning == false {
             runTimer()
         }
@@ -541,7 +501,7 @@ class ViewController: UIViewController {
     
     @objc func tryAgainScreen() {
         areQuestionsDone = true
-        TimerLabel.text = "0:40"
+        TimerLabel.text = "1:20"
         welcomeLabel.text = "Try Again?"
         descriptionLabel.text = ""
         finalScoreNumberLabel.text = "\(score)"
@@ -569,6 +529,25 @@ class ViewController: UIViewController {
         setView(view: finalScoreLabel, hidden: false)
         setView(view: finalScoreNumberLabel, hidden: false)
         setView(view: backHomeButton, hidden: false)
+    }
+    
+    @objc func timerReset() {
+        timerSeconds = 80
+        TimerLabel.textColor = UIColor.black
+        //anxietyLabel.textColor = UIColor.black
+    }
+    
+    @objc func wrongAnswer() {
+        setView(view: questionWrongLabel, hidden: false)
+        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
+            self.setView(view: self.questionWrongLabel, hidden: true)
+        }
+    }
+    @objc func correctAnswer() {
+        setView(view: questionGoodJobLabel, hidden: false)
+        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
+            self.setView(view: self.questionGoodJobLabel, hidden: true)
+        }
     }
     
 /* BUTTON ACTIONS */
