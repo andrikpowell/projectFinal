@@ -28,7 +28,6 @@ class ViewController: UIViewController {
     var q3button4 = false
     var questionNumber = 0
     var areQuestionsDone:Bool = false
-    var test = 1
     
 /* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS */
     /*
