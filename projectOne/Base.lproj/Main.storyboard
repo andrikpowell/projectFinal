@@ -383,6 +383,13 @@
                                     <action selector="backHomeButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rub-Yw-2sU"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You must type in a valid name to continue." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOk-HQ-dPu">
+                                <rect key="frame" x="100" y="433" width="212" height="72"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -399,6 +406,7 @@
                         <outlet property="nameButton" destination="f5q-fs-k1T" id="0ky-pg-TiF"/>
                         <outlet property="nameDisclaimerLabel1" destination="UlR-0T-MLR" id="WOS-G8-ewp"/>
                         <outlet property="nameDisclaimerLabel2" destination="YLV-Cn-doT" id="CC1-yS-u3l"/>
+                        <outlet property="nameErrorLabel" destination="QOk-HQ-dPu" id="AdU-2c-Zsp"/>
                         <outlet property="nameLabel" destination="5sD-N3-amh" id="MD1-fh-ICw"/>
                         <outlet property="nameTextField" destination="e4g-q5-Spu" id="6OJ-bt-nHn"/>
                         <outlet property="playButton" destination="0KV-ji-zwB" id="TZi-wZ-rIF"/>

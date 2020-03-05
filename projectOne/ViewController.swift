@@ -94,6 +94,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var q2redButton: UIButton!
     @IBOutlet weak var q2blueButton: UIButton!
     @IBOutlet weak var q4textField: UITextField!
+    @IBOutlet weak var nameErrorLabel: UILabel!
+    
     
 /* QUESTION 1 SWITCHES*/
     
@@ -308,11 +310,13 @@ class ViewController: UIViewController {
                 let q4word = q4textField.text!
                 chars = q4word.count
                 if (chars == 6) {
+                    q4textField.resignFirstResponder()
                     didScore(points:10)
                     question5()
                     correctAnswer()
                 }
                     else {
+                    q4textField.resignFirstResponder()
                     wrongAnswer()
                     }
 
@@ -391,9 +395,9 @@ class ViewController: UIViewController {
     @objc func homeScreen() {
         let defaults = UserDefaults.standard
         let token = defaults.string(forKey: "playerName")!
-        let hsToken = defaults.integer(forKey: "highScore")
+        //let hsToken = defaults.integer(forKey: "highScore")
         areQuestionsDone = false
-        welcomeLabel.text = "Welcome, \(token)"
+        welcomeLabel.text = "Welcome, \(String(describing: token))"
         homeScoreNumberLabel.text = "\(score)"
 /* GLOBAL HIGH SCORE LINE: */
         //homeScoreNumberLabel.text = "\(hsToken)"
@@ -402,6 +406,7 @@ class ViewController: UIViewController {
         setView(view: nameDisclaimerLabel2, hidden: true)
         setView(view: nameTextField, hidden: true)
         setView(view: nameButton, hidden: true)
+        setView(view: nameErrorLabel, hidden: true)
         setView(view: resetButton, hidden: false)
         setView(view: playButton, hidden: false)
         setView(view: tryAgainButton, hidden: true)
@@ -418,6 +423,7 @@ class ViewController: UIViewController {
     @objc func introScreen() {
         welcomeLabel.text = "Welcome"
         setView(view: nameLabel, hidden: false)
+        setView(view: nameErrorLabel, hidden: true)
         setView(view: nameDisclaimerLabel1, hidden: false)
         setView(view: nameDisclaimerLabel2, hidden: false)
         setView(view: nameTextField, hidden: false)
@@ -562,15 +568,25 @@ class ViewController: UIViewController {
     
     @IBAction func resetButtonAction(_ sender: Any) {
         token = ""
+        nameTextField.text = ""
         let defaults = UserDefaults.standard
         defaults.set(token, forKey: "playerName")
         introScreen()
     }
     @IBAction func nameButtonAction(_ sender: Any) {
         token = nameTextField.text!
-        let defaults = UserDefaults.standard
-        defaults.set(token, forKey: "playerName")
-        homeScreen()
+        nameTextField.resignFirstResponder()
+        if (token == "") {
+            setView(view: nameErrorLabel, hidden: false)
+            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
+                self.setView(view: self.nameErrorLabel, hidden: true)
+            }
+        }
+        else {
+            let defaults = UserDefaults.standard
+            defaults.set(token, forKey: "playerName")
+            homeScreen()
+        }
     }
     @IBAction func backHomeButtonAction(_ sender: Any) {
         homeScreen()
@@ -580,8 +596,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let defaults = UserDefaults.standard
-        let token = defaults.string(forKey: "playerName")!
-        if(token == "") {
+        let token = defaults.string(forKey: "playerName")
+        if(token == "") || (token == nil) {
+            
             introScreen()
         }
         else {
