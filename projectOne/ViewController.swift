@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-/* VARIABLES AND OUTLETS */
+/* OUTLETS */
     var score:Int = 0
     var timer = Timer()
     var timerSeconds = 80 //This variable will hold a starting value of seconds. It could be any amount above 0.
@@ -28,85 +28,7 @@ class ViewController: UIViewController {
     var q3button4 = false
     var questionNumber = 0
     var areQuestionsDone:Bool = false
-        
-    @objc func randomQuestion() {
-        let randomFunc = [question1, question2, question3, question4, question5]
-        let randomResult = Int(arc4random_uniform(UInt32(randomFunc.count)))
-        randomFunc[randomResult]()
-
-    }
-    
-    /*
-    func questionRandom<T>( array: inout [T]) -> [T] {
-        for index in Array(0..<array.count) {
-            let randomIndex = Int(arc4random_uniform(UInt32(index)))
-            (array[index], array[randomIndex]) = (array[randomIndex], array[index])
-        }
-        
-        return array
-    }
- */
-    /*
-    let questionFinished = questionRandom(array)
-    var randomIndex = Int()
-    let NumberOfFunctions = 5
-    var chosenIndexes: [Int] = []{
-        didSet{
-            if chosenIndexes.count == NumberOfFunctions { chosenIndexes.removeAll() }
-        }
-    }*/
-
- /*   func functionSelector(){
-        repeat{
-            randomIndex = Int.randomOutOf(NumberOfFunctions)
-            print("selected: \(randomIndex) \(chosenIndexes)")
-        } while chosenIndexes.contains(randomIndex)
-
-        chosenIndexes.append(randomIndex)
-
-        switch randomIndex {
-        case 0: question1()
-        case 1: question2()
-        case 2: question3()
-        case 3: question4()
-        case 4: question5()
-        default: break
-        }
-    }
-    //your extension to pick random
-    private extension Int {
-        static func randomOutOf(max:Int) ->Int{
-            return Int(arc4random() % UInt32(max)) // returns 0 - max
-        }
-    }
- */
-/* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS */
-    /*
-    var questionArray = [
-        question1,
-        question2,
-        question3,
-        question4,
-        question5]
-    let dictionaryOfFunctions = [
-        "question1": question1,
-        "question2": question2,
-        "question3": question3,
-        "question4": question4,
-        "question5": question5,
-    ]
-    var indexes = [Int]();
-    func randomQuestion() -> func
-    {
-        if indexes.count == 0
-        {
-            indexes = Array(0..<questionArray.count)
-        }
-        let randomIndex = Int(arc4random_uniform(UInt32(indexes.count)))
-        let anIndex = indexes.remove(at: randomIndex)
-        return questionArray[anIndex].0;
-    }
- */
+    var questionLabelNumber:Int = 0
     
 /* OUTLETS */
 
@@ -146,10 +68,50 @@ class ViewController: UIViewController {
     @IBOutlet weak var q2blueButton: UIButton!
     @IBOutlet weak var q4textField: UITextField!
     @IBOutlet weak var nameErrorLabel: UILabel!
-    
+    @IBOutlet weak var MadeHighScoreLabel: UILabel!
+    @IBOutlet weak var finalHighScoreNumberLabel: UILabel!
+  
+    /* UPON APP LOAD */
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            let defaults = UserDefaults.standard
+            let token = defaults.string(forKey: "playerName")
+            if(token == "") || (token == nil) {
+                
+                introScreen()
+            }
+            else {
+                homeScreen()
+            }
+            
+            let tap1 = UITapGestureRecognizer(target: self, action: #selector(ViewController.q1nature1ImageSelect))
+            let tap2 = UITapGestureRecognizer(target: self, action: #selector(ViewController.q1nature2ImageSelect))
+            let tap3 = UITapGestureRecognizer(target: self, action: #selector(ViewController.q1nature3ImageSelect))
+            let tap4 = UITapGestureRecognizer(target: self, action: #selector(ViewController.q1nature4ImageSelect))
+
+            q1nature1BG.addGestureRecognizer(tap1)
+            q1nature2BG.addGestureRecognizer(tap2)
+            q1nature3BG.addGestureRecognizer(tap3)
+            q1nature4BG.addGestureRecognizer(tap4)
+
+    /* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS
+
+                   let fn1 = questionArray[0]
+                   fn1(self)()
+                   let fn2 = dictionaryOfFunctions["question2"]
+                   fn2!(self)()
+                   let fn3 = dictionaryOfFunctions["question3"]
+                   fn3!(self)()
+                   let fn4 = dictionaryOfFunctions["question4"]
+                   fn4!(self)()
+                   let fn5 = dictionaryOfFunctions["question5"]
+                   fn5!(self)()
+
+        
+     */
+        }
     
 /* QUESTION 1 SWITCHES*/
-    
     
     @IBAction func q1nature1Action(_ sender: UIButton) {
         if sender.isSelected {
@@ -187,7 +149,6 @@ class ViewController: UIViewController {
              nature4 = true
          }
     }
-
     @objc func q1nature1ImageSelect()
      {
          if q1nature1Button.isSelected {
@@ -229,7 +190,7 @@ class ViewController: UIViewController {
          }
      }
     
-    /* QUESTION 3 SWITCHES*/
+    /* COLOR BUTTONS */
     
     @IBAction func q2purpleButtonAction(_ sender: UIButton) {
         if(questionNumber == 3) {
@@ -246,8 +207,7 @@ class ViewController: UIViewController {
         }
         else if(questionNumber == 5) {
             didScore(points:10)
-            //question1()
-            randomQuestion()
+            nextQuestion()
             correctAnswer()
         }
     }
@@ -265,8 +225,7 @@ class ViewController: UIViewController {
     @IBAction func q2blueButtonAction(_ sender: UIButton) {
         if(questionNumber == 3) {
             didScore(points:10)
-            //question4()
-            randomQuestion()
+            nextQuestion()
             correctAnswer()
         }
         else if(questionNumber == 5) {
@@ -338,8 +297,7 @@ class ViewController: UIViewController {
             if(nature1 == true && nature2 == true && nature3 == false && nature4 == true)
             {
                 didScore(points:10)
-                //question2()
-                randomQuestion()
+                nextQuestion()
                 correctAnswer()
             }
             else
@@ -351,8 +309,7 @@ class ViewController: UIViewController {
             if(sliderAnswer == 5)
             {
                 didScore(points:10)
-                //question3()
-                randomQuestion()
+                nextQuestion()
                 correctAnswer()
 
             }
@@ -364,15 +321,13 @@ class ViewController: UIViewController {
             if(questionNumber == 4) {
                 let q4word = q4textField.text!
                 chars = q4word.count
+                q4textField.resignFirstResponder()
                 if (chars == 6) {
-                    q4textField.resignFirstResponder()
                     didScore(points:10)
-                    //question5()
-                    randomQuestion()
+                    nextQuestion()
                     correctAnswer()
                 }
                     else {
-                    q4textField.resignFirstResponder()
                     wrongAnswer()
                     }
 
@@ -396,7 +351,6 @@ class ViewController: UIViewController {
         setView(view: q1nature2BG, hidden: false)
         setView(view: q1nature3BG, hidden: false)
         setView(view: q1nature4BG, hidden: false)
-        welcomeLabel.text = "Question 1"
         descriptionLabel.text = "Choose the images that reflect NATURE"
     }
     
@@ -405,7 +359,6 @@ class ViewController: UIViewController {
         questionNumber = 2
         setView(view: q2Slider, hidden: false)
         setView(view: q2SliderArrow, hidden: false)
-        welcomeLabel.text = "Question 2"
         descriptionLabel.text = "Move the slider to where the ARROW is pointing"
     }
     
@@ -417,7 +370,6 @@ class ViewController: UIViewController {
         setView(view: q2greenButton, hidden: false)
         setView(view: q2redButton, hidden: false)
         setView(view: q2blueButton, hidden: false)
-        welcomeLabel.text = "Question 3"
         descriptionLabel.text = "Select the button that says BLUE"
     }
     
@@ -425,7 +377,6 @@ class ViewController: UIViewController {
         questionClear()
         questionNumber = 4
         setView(view: q4textField, hidden: false)
-        welcomeLabel.text = "Question 4"
         descriptionLabel.text = "Type in a 6 LETTER word:"
     }
     @objc func question5() {
@@ -440,7 +391,6 @@ class ViewController: UIViewController {
         setView(view: q2greenButton, hidden: false)
         setView(view: q2redButton, hidden: false)
         setView(view: q2blueButton, hidden: false)
-        welcomeLabel.text = "Question 5"
         descriptionLabel.text = "Select the button that says GREEN"
     }
 
@@ -451,12 +401,10 @@ class ViewController: UIViewController {
     @objc func homeScreen() {
         let defaults = UserDefaults.standard
         let token = defaults.string(forKey: "playerName")!
-        //let hsToken = defaults.integer(forKey: "highScore")
+        let hsToken = defaults.integer(forKey: "highScore")
         areQuestionsDone = false
         welcomeLabel.text = "Welcome, \(String(describing: token))"
-        homeScoreNumberLabel.text = "\(score)"
-/* GLOBAL HIGH SCORE LINE: */
-        //homeScoreNumberLabel.text = "\(hsToken)"
+        homeScoreNumberLabel.text = "\(hsToken)"
         setView(view: nameLabel, hidden: true)
         setView(view: nameDisclaimerLabel1, hidden: true)
         setView(view: nameDisclaimerLabel2, hidden: true)
@@ -473,6 +421,8 @@ class ViewController: UIViewController {
         setView(view: backHomeButton, hidden: true)
         setView(view: homeScoreLabel, hidden: false)
         setView(view: homeScoreNumberLabel, hidden: false)
+        setView(view: finalHighScoreNumberLabel, hidden: true)
+        setView(view: MadeHighScoreLabel, hidden: true)
         timerReset()
     }
     
@@ -494,6 +444,8 @@ class ViewController: UIViewController {
         setView(view: backHomeButton, hidden: true)
         setView(view: homeScoreLabel, hidden: true)
         setView(view: homeScoreNumberLabel, hidden: true)
+        setView(view: finalHighScoreNumberLabel, hidden: true)
+        setView(view: MadeHighScoreLabel, hidden: true)
         timerReset()
         score = 0
     }
@@ -501,14 +453,15 @@ class ViewController: UIViewController {
     @objc func questionScreen() {
         timerReset()
         score = 0
+        questionLabelNumber = 0
+        questionNumber = 0
         areQuestionsDone = false
         scoreLabel.text = "\(score)"
         TimerLabel.text = timeString(time: TimeInterval(timerSeconds))  //This will update the label.
         if isTimerRunning == false {
             runTimer()
         }
-        //question1()
-        randomQuestion()
+        nextQuestion()
     }
     
     func questionClear() {
@@ -542,6 +495,8 @@ class ViewController: UIViewController {
         setView(view: homeScoreLabel, hidden: true)
         setView(view: homeScoreNumberLabel, hidden: true)
         setView(view: q4textField, hidden: true)
+        setView(view: finalHighScoreNumberLabel, hidden: true)
+        setView(view: MadeHighScoreLabel, hidden: true)
         q1nature1Button.isSelected = false
         q1nature2Button.isSelected = false
         q1nature3Button.isSelected = false
@@ -560,27 +515,29 @@ class ViewController: UIViewController {
         sliderAnswer = 2
         descriptionLabel.text = ""
         welcomeLabel.text = ""
+        questionLabelNumber = questionLabelNumber + 1
+        welcomeLabel.text = "Question \(questionLabelNumber)"
+        
     }
     
     @objc func tryAgainScreen() {
+        questionClear()
         areQuestionsDone = true
         TimerLabel.text = "1:20"
         welcomeLabel.text = "Try Again?"
         descriptionLabel.text = ""
         finalScoreNumberLabel.text = "\(score)"
-/* TRYING TO FIGURE OUT HOW TO DO GLOBAL HIGH SCORE VARIABLE */
-        /*
         let defaults = UserDefaults.standard
         let hsToken = defaults.integer(forKey: "highScore")
-        finalScoreNumberLabel.text = "\(hsToken)"
         if(score > hsToken) {
-            defaults.set(hsToken, forKey: "highScore")
+            defaults.set(score, forKey: "highScore")
+            setView(view: MadeHighScoreLabel, hidden: false)
         }
         else {
             score = 0
+            finalHighScoreNumberLabel.text = "High Score: \(hsToken)"
+            setView(view: finalHighScoreNumberLabel, hidden: false)
         }
-        */
-        questionClear()
         setView(view: tryAgainButton, hidden: false)
         setView(view: questionSubmitButton, hidden: true)
         setView(view: anxietyLabel, hidden: true)
@@ -597,7 +554,6 @@ class ViewController: UIViewController {
     @objc func timerReset() {
         timerSeconds = 80
         TimerLabel.textColor = UIColor.black
-        //anxietyLabel.textColor = UIColor.black
     }
     
     @objc func wrongAnswer() {
@@ -613,6 +569,24 @@ class ViewController: UIViewController {
         }
     }
     
+    @objc func nextQuestion() {
+        if(questionNumber == 1) {
+            question2()
+        }
+        else if(questionNumber == 2) {
+            question3()
+        }
+        else if(questionNumber == 3) {
+            question4()
+        }
+        else if(questionNumber == 4) {
+            question5()
+        }
+        else {
+            question1()
+        }
+    }
+    
 /* BUTTON ACTIONS */
     
     @IBAction func playButtonAction(_ sender: Any) {
@@ -625,9 +599,11 @@ class ViewController: UIViewController {
     
     @IBAction func resetButtonAction(_ sender: Any) {
         token = ""
+        hsToken = 0
         nameTextField.text = ""
         let defaults = UserDefaults.standard
         defaults.set(token, forKey: "playerName")
+        defaults.set(hsToken, forKey: "highScore")
         introScreen()
     }
     @IBAction func nameButtonAction(_ sender: Any) {
@@ -648,45 +624,82 @@ class ViewController: UIViewController {
     @IBAction func backHomeButtonAction(_ sender: Any) {
         homeScreen()
     }
-
-/* UPON APP LOAD */
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let defaults = UserDefaults.standard
-        let token = defaults.string(forKey: "playerName")
-        if(token == "") || (token == nil) {
-            
-            introScreen()
-        }
-        else {
-            homeScreen()
-        }
-        let tap1 = UITapGestureRecognizer(target: self, action: #selector(ViewController.q1nature1ImageSelect))
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(ViewController.q1nature2ImageSelect))
-        let tap3 = UITapGestureRecognizer(target: self, action: #selector(ViewController.q1nature3ImageSelect))
-        let tap4 = UITapGestureRecognizer(target: self, action: #selector(ViewController.q1nature4ImageSelect))
-
-        q1nature1BG.addGestureRecognizer(tap1)
-        q1nature2BG.addGestureRecognizer(tap2)
-        q1nature3BG.addGestureRecognizer(tap3)
-        q1nature4BG.addGestureRecognizer(tap4)
-
-/* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS
-
-               let fn1 = questionArray[0]
-               fn1(self)()
-               let fn2 = dictionaryOfFunctions["question2"]
-               fn2!(self)()
-               let fn3 = dictionaryOfFunctions["question3"]
-               fn3!(self)()
-               let fn4 = dictionaryOfFunctions["question4"]
-               fn4!(self)()
-               let fn5 = dictionaryOfFunctions["question5"]
-               fn5!(self)()
-
     
- */
-    }
+    /* RANDOM QUESTIONS */
+       /*
+        
+        @objc func nextQuestion() {
+            let randomFunc = [question1, question2, question3, question4, question5]
+            let randomResult = Int(arc4random_uniform(UInt32(randomFunc.count)))
+            randomFunc[randomResult]()
+
+        }
+        func questionRandom<T>( array: inout [T]) -> [T] {
+            for index in Array(0..<array.count) {
+                let randomIndex = Int(arc4random_uniform(UInt32(index)))
+                (array[index], array[randomIndex]) = (array[randomIndex], array[index])
+            }
+            
+            return array
+        }
+         
+        let questionFinished = questionRandom(array)
+        var randomIndex = Int()
+        let NumberOfFunctions = 5
+        var chosenIndexes: [Int] = []{
+            didSet{
+                if chosenIndexes.count == NumberOfFunctions { chosenIndexes.removeAll() }
+            }
+        }
+        func functionSelector(){
+            repeat{
+                randomIndex = Int.randomOutOf(NumberOfFunctions)
+                print("selected: \(randomIndex) \(chosenIndexes)")
+            } while chosenIndexes.contains(randomIndex)
+
+            chosenIndexes.append(randomIndex)
+
+            switch randomIndex {
+            case 0: question1()
+            case 1: question2()
+            case 2: question3()
+            case 3: question4()
+            case 4: question5()
+            default: break
+            }
+        }
+        //your extension to pick random
+        private extension Int {
+            static func randomOutOf(max:Int) ->Int{
+                return Int(arc4random() % UInt32(max)) // returns 0 - max
+            }
+        }
+        
+       var questionArray = [
+           question1,
+           question2,
+           question3,
+           question4,
+           question5]
+       let dictionaryOfFunctions = [
+           "question1": question1,
+           "question2": question2,
+           "question3": question3,
+           "question4": question4,
+           "question5": question5,
+       ]
+       var indexes = [Int]();
+       func randomQuestion() -> func
+       {
+           if indexes.count == 0
+           {
+               indexes = Array(0..<questionArray.count)
+           }
+           let randomIndex = Int(arc4random_uniform(UInt32(indexes.count)))
+           let anIndex = indexes.remove(at: randomIndex)
+           return questionArray[anIndex].0;
+       }
+    */
     
 }
 
