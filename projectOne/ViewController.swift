@@ -28,7 +28,58 @@ class ViewController: UIViewController {
     var q3button4 = false
     var questionNumber = 0
     var areQuestionsDone:Bool = false
+        
+    @objc func randomQuestion() {
+        let randomFunc = [question1, question2, question3, question4, question5]
+        let randomResult = Int(arc4random_uniform(UInt32(randomFunc.count)))
+        randomFunc[randomResult]()
+
+    }
     
+    /*
+    func questionRandom<T>( array: inout [T]) -> [T] {
+        for index in Array(0..<array.count) {
+            let randomIndex = Int(arc4random_uniform(UInt32(index)))
+            (array[index], array[randomIndex]) = (array[randomIndex], array[index])
+        }
+        
+        return array
+    }
+ */
+    /*
+    let questionFinished = questionRandom(array)
+    var randomIndex = Int()
+    let NumberOfFunctions = 5
+    var chosenIndexes: [Int] = []{
+        didSet{
+            if chosenIndexes.count == NumberOfFunctions { chosenIndexes.removeAll() }
+        }
+    }*/
+
+ /*   func functionSelector(){
+        repeat{
+            randomIndex = Int.randomOutOf(NumberOfFunctions)
+            print("selected: \(randomIndex) \(chosenIndexes)")
+        } while chosenIndexes.contains(randomIndex)
+
+        chosenIndexes.append(randomIndex)
+
+        switch randomIndex {
+        case 0: question1()
+        case 1: question2()
+        case 2: question3()
+        case 3: question4()
+        case 4: question5()
+        default: break
+        }
+    }
+    //your extension to pick random
+    private extension Int {
+        static func randomOutOf(max:Int) ->Int{
+            return Int(arc4random() % UInt32(max)) // returns 0 - max
+        }
+    }
+ */
 /* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS */
     /*
     var questionArray = [
@@ -195,7 +246,8 @@ class ViewController: UIViewController {
         }
         else if(questionNumber == 5) {
             didScore(points:10)
-            question1()
+            //question1()
+            randomQuestion()
             correctAnswer()
         }
     }
@@ -213,7 +265,8 @@ class ViewController: UIViewController {
     @IBAction func q2blueButtonAction(_ sender: UIButton) {
         if(questionNumber == 3) {
             didScore(points:10)
-            question4()
+            //question4()
+            randomQuestion()
             correctAnswer()
         }
         else if(questionNumber == 5) {
@@ -285,7 +338,8 @@ class ViewController: UIViewController {
             if(nature1 == true && nature2 == true && nature3 == false && nature4 == true)
             {
                 didScore(points:10)
-                question2()
+                //question2()
+                randomQuestion()
                 correctAnswer()
             }
             else
@@ -297,7 +351,8 @@ class ViewController: UIViewController {
             if(sliderAnswer == 5)
             {
                 didScore(points:10)
-                question3()
+                //question3()
+                randomQuestion()
                 correctAnswer()
 
             }
@@ -312,7 +367,8 @@ class ViewController: UIViewController {
                 if (chars == 6) {
                     q4textField.resignFirstResponder()
                     didScore(points:10)
-                    question5()
+                    //question5()
+                    randomQuestion()
                     correctAnswer()
                 }
                     else {
@@ -451,7 +507,8 @@ class ViewController: UIViewController {
         if isTimerRunning == false {
             runTimer()
         }
-        question1()
+        //question1()
+        randomQuestion()
     }
     
     func questionClear() {
@@ -614,9 +671,8 @@ class ViewController: UIViewController {
         q1nature3BG.addGestureRecognizer(tap3)
         q1nature4BG.addGestureRecognizer(tap4)
 
-/* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS */
+/* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS
 
-        /*
                let fn1 = questionArray[0]
                fn1(self)()
                let fn2 = dictionaryOfFunctions["question2"]
@@ -627,10 +683,10 @@ class ViewController: UIViewController {
                fn4!(self)()
                let fn5 = dictionaryOfFunctions["question5"]
                fn5!(self)()
-        */
 
+    
+ */
     }
-
     
 }
 
