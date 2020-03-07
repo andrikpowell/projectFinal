@@ -529,7 +529,7 @@ class ViewController: UIViewController {
         finalScoreNumberLabel.text = "\(score)"
         let defaults = UserDefaults.standard
         let hsToken = defaults.integer(forKey: "highScore")
-        if(score > hsToken) {
+        if(score > hsToken) || (hsToken == 0) {
             defaults.set(score, forKey: "highScore")
             setView(view: MadeHighScoreLabel, hidden: false)
         }
