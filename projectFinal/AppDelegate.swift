@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  projectOne
+//  projectFinal
 //
 //  Created by Powell, Andrik on 2/24/20.
 //  Copyright © 2020 Powell, Andrik. All rights reserved.
