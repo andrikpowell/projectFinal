@@ -15,16 +15,27 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var homeScoreLabel: UILabel!
     @IBOutlet weak var homeScoreNumberLabel: UILabel!
+/*
+    func showSomeViewController() {
+        self.performSegue(withIdentifier: "timerSegue", sender: self);
+    }
 
+    func prepareForSegue(segue: Q1Segue, sender: AnyObject?) {
 
-    
+        if (segue.identifier == "timerSegue")
+        {
+            let vc: TimerViewController = segue.destinationViewController as! TimerViewController
+            vc.scoreLabel.text = "say ho"
+        }
+    }
+*/
     override func viewDidLoad() {
         super.viewDidLoad()
         
         super.viewDidLoad()
         /*var localToken = global.defaults.string(forKey: "playerName")*/
         let defaults = UserDefaults.standard
-        global.token = defaults.string(forKey: "playerName")!
+        global.token = defaults.string(forKey: "playerName") ?? ""
         global.hsToken = defaults.integer(forKey: "highScore")
         global.areQuestionsDone = false
         if(global.token == "") || (global.token == nil) {
@@ -47,12 +58,8 @@ class HomeViewController: UIViewController {
         global.questionLabelNumber = 0
         global.questionNumber = 0
         global.areQuestionsDone = false
-        TimerViewController().scoreLabel.text = "\(global.score)"
-        TimerViewController().TimerLabel.text = TimerViewController().timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
-        if global.isTimerRunning == false {
-            TimerViewController().runTimer()
-        }
-        performSegue(withIdentifier: "Q1Segue", sender: self)
+        //TimerViewController().runTimer()
+        performSegue(withIdentifier: "QuizSegue", sender: self)
     }
     
     

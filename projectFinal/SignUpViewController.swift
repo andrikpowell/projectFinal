@@ -31,6 +31,7 @@ class SignUpViewController: UIViewController {
         global.score = 0
         global.token = ""
         global.hsToken = 0
+        TimerViewController().timerReset()
         nameTextField.text = ""
         let defaults = UserDefaults.standard
         defaults.set(global.token, forKey: "playerName")

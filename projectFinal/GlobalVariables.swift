@@ -11,7 +11,6 @@ import UIKit
 
 class Global {
     var score:Int = 0
-    var timer = Timer()
     var timerSeconds = 80 //This variable will hold a starting value of seconds. It could be any amount above 0.
     var isTimerRunning:Bool = false //This will be used to make sure only one timer is created at a time.
     var token:String = ""
@@ -20,5 +19,9 @@ class Global {
     var areQuestionsDone:Bool = false
     var questionLabelNumber:Int = 0
     //let defaults = UserDefaults.standard
+    var objTimerViewController : TimerViewController?
+    var objHomeViewController : HomeViewController?
+    var objResultsViewController : ResultsViewController?
+
 }
 let global = Global()

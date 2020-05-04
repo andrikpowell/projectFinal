@@ -12,18 +12,13 @@
 		04DA83E924045425000A3C8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04DA83E724045425000A3C8A /* Main.storyboard */; };
 		04DA83EB24045426000A3C8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04DA83EA24045426000A3C8A /* Assets.xcassets */; };
 		04DA83EE24045426000A3C8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04DA83EC24045426000A3C8A /* LaunchScreen.storyboard */; };
+		B131F48B245F86FA00694A3C /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B131F48A245F86FA00694A3C /* QuizViewController.swift */; };
 		B17C1583245A8B14004E4E7F /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17C1582245A8B14004E4E7F /* SignUpViewController.swift */; };
 		B17C1585245A91D7004E4E7F /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17C1584245A91D7004E4E7F /* GlobalFunctions.swift */; };
 		B17C1587245AA1B1004E4E7F /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17C1586245AA1B1004E4E7F /* ResultsViewController.swift */; };
-		B17C1589245AA63F004E4E7F /* Q1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17C1588245AA63F004E4E7F /* Q1ViewController.swift */; };
-		B17C158B245AA64C004E4E7F /* Q2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17C158A245AA64C004E4E7F /* Q2ViewController.swift */; };
 		B1EAB47B245BA9EF00407D9B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EAB47A245BA9EF00407D9B /* HomeViewController.swift */; };
 		B1EAB47D245BAA2700407D9B /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EAB47C245BAA2700407D9B /* GlobalVariables.swift */; };
 		B1EAB481245BB1EF00407D9B /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EAB480245BB1EF00407D9B /* TimerViewController.swift */; };
-		B1EAB483245BBBC200407D9B /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EAB482245BBBC200407D9B /* MessageViewController.swift */; };
-		B1EAB485245BC3D700407D9B /* Q3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EAB484245BC3D700407D9B /* Q3ViewController.swift */; };
-		B1EAB487245BC3E100407D9B /* Q4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EAB486245BC3E100407D9B /* Q4ViewController.swift */; };
-		B1EAB489245BC3ED00407D9B /* Q5ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EAB488245BC3ED00407D9B /* Q5ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,18 +29,13 @@
 		04DA83EA24045426000A3C8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04DA83ED24045426000A3C8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04DA83EF24045426000A3C8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B131F48A245F86FA00694A3C /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
 		B17C1582245A8B14004E4E7F /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B17C1584245A91D7004E4E7F /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		B17C1586245AA1B1004E4E7F /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
-		B17C1588245AA63F004E4E7F /* Q1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q1ViewController.swift; sourceTree = "<group>"; };
-		B17C158A245AA64C004E4E7F /* Q2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q2ViewController.swift; sourceTree = "<group>"; };
 		B1EAB47A245BA9EF00407D9B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B1EAB47C245BAA2700407D9B /* GlobalVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		B1EAB480245BB1EF00407D9B /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
-		B1EAB482245BBBC200407D9B /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
-		B1EAB484245BC3D700407D9B /* Q3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q3ViewController.swift; sourceTree = "<group>"; };
-		B1EAB486245BC3E100407D9B /* Q4ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q4ViewController.swift; sourceTree = "<group>"; };
-		B1EAB488245BC3ED00407D9B /* Q5ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q5ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,17 +72,12 @@
 				04DA83E324045425000A3C8A /* SceneDelegate.swift */,
 				B17C1584245A91D7004E4E7F /* GlobalFunctions.swift */,
 				B1EAB47C245BAA2700407D9B /* GlobalVariables.swift */,
-				B1EAB482245BBBC200407D9B /* MessageViewController.swift */,
 				B1EAB480245BB1EF00407D9B /* TimerViewController.swift */,
 				B1EAB47A245BA9EF00407D9B /* HomeViewController.swift */,
-				B17C1588245AA63F004E4E7F /* Q1ViewController.swift */,
-				B17C158A245AA64C004E4E7F /* Q2ViewController.swift */,
-				B1EAB484245BC3D700407D9B /* Q3ViewController.swift */,
-				B1EAB486245BC3E100407D9B /* Q4ViewController.swift */,
-				B1EAB488245BC3ED00407D9B /* Q5ViewController.swift */,
+				B17C1582245A8B14004E4E7F /* SignUpViewController.swift */,
+				B131F48A245F86FA00694A3C /* QuizViewController.swift */,
 				B17C1586245AA1B1004E4E7F /* ResultsViewController.swift */,
 				04DA83E724045425000A3C8A /* Main.storyboard */,
-				B17C1582245A8B14004E4E7F /* SignUpViewController.swift */,
 				04DA83EA24045426000A3C8A /* Assets.xcassets */,
 				04DA83EC24045426000A3C8A /* LaunchScreen.storyboard */,
 				04DA83EF24045426000A3C8A /* Info.plist */,
@@ -173,17 +158,12 @@
 			files = (
 				B17C1585245A91D7004E4E7F /* GlobalFunctions.swift in Sources */,
 				04DA83E224045425000A3C8A /* AppDelegate.swift in Sources */,
-				B1EAB487245BC3E100407D9B /* Q4ViewController.swift in Sources */,
-				B17C158B245AA64C004E4E7F /* Q2ViewController.swift in Sources */,
 				B1EAB47D245BAA2700407D9B /* GlobalVariables.swift in Sources */,
 				B17C1583245A8B14004E4E7F /* SignUpViewController.swift in Sources */,
+				B131F48B245F86FA00694A3C /* QuizViewController.swift in Sources */,
 				B1EAB47B245BA9EF00407D9B /* HomeViewController.swift in Sources */,
-				B1EAB489245BC3ED00407D9B /* Q5ViewController.swift in Sources */,
-				B17C1589245AA63F004E4E7F /* Q1ViewController.swift in Sources */,
 				04DA83E424045425000A3C8A /* SceneDelegate.swift in Sources */,
-				B1EAB485245BC3D700407D9B /* Q3ViewController.swift in Sources */,
 				B1EAB481245BB1EF00407D9B /* TimerViewController.swift in Sources */,
-				B1EAB483245BBBC200407D9B /* MessageViewController.swift in Sources */,
 				B17C1587245AA1B1004E4E7F /* ResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

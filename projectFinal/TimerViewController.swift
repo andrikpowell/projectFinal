@@ -9,59 +9,94 @@
 import UIKit
 
 class TimerViewController: UIViewController {
+    
+    var timer = Timer()
 
-    @IBOutlet weak var TimerLabel: UILabel!
-    @IBOutlet weak var anxietyLabel: UILabel!
-    @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var scoreTextLabel: UILabel!
+    @IBOutlet weak var TimerLabel: UILabel?
+    @IBOutlet weak var anxietyLabel: UILabel?
+    @IBOutlet weak var scoreLabel: UILabel?
+    @IBOutlet weak var scoreTextLabel: UILabel?
+    //var tmpString: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if(scoreLabel.text == nil) {
-            scoreLabel.text = "1:20"
+        /*if global.isTimerRunning==false {
+            runTimer()
+        }*/
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if global.isTimerRunning==false {
+            runTimer()
         }
-        else {
-            
-        }
-        // Do any additional setup after loading the view.
+        scoreLabel?.text = "\(global.score)"
+        TimerLabel?.text = "1:20"
     }
     
     func timerReset() {
         global.timerSeconds = 80
-        //TimerViewController().TimerLabel.textColor = UIColor.black
+        TimerLabel?.textColor = UIColor.black
     }
+    
+    func updateScoreLabel() {
+        viewWillAppear(true)
+        scoreLabel?.text = "\(global.score)"
+        print(global.score)
+    }
+    
+    /* SCORE FUNCTION */
+        
+    func didScore(points:Int){
+        global.score += points
+        updateScoreLabel()
+       }
 
     @objc func updateTimer() {
+        TimerViewController().viewWillAppear(true)
         global.timerSeconds -= 1     //This will decrement(count down)the seconds.
-        TimerLabel.text = timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
+        TimerLabel?.text = timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
         if(global.timerSeconds == 0) {
-            global.timer.invalidate()
-            //ViewController().tryAgainScreen()
-            if Q1ViewController().viewIfLoaded?.window != nil {
-                performSegue(withIdentifier: "ResultsSegue", sender: self)
+            timer.invalidate()
+            QuizViewController().tryAgainScreen()
+            /*
+            if Q1ViewController().isBeingPresented {
+                performSegue(withIdentifier: "ResultsSegue", sender: Q1ViewController())
             }
-            else if Q2ViewController().viewIfLoaded?.window != nil {
+            else if Q2ViewController().isBeingPresented {
             performSegue(withIdentifier: "ResultsSegue", sender: self)
             }
-            else if Q3ViewController().viewIfLoaded?.window != nil {
+            else if Q3ViewController().isBeingPresented {
             performSegue(withIdentifier: "ResultsSegue", sender: self)
             }
-            else if Q4ViewController().viewIfLoaded?.window != nil {
+            else if Q4ViewController().isBeingPresented {
             performSegue(withIdentifier: "ResultsSegue", sender: self)
             }
-            else if Q5ViewController().viewIfLoaded?.window != nil {
+            else if Q5ViewController().isBeingPresented {
             performSegue(withIdentifier: "ResultsSegue", sender: self)
             }
+            else {
+                TimerLabel?.text = "didn't work"
+            }
+ */
 
         }
         else if(global.timerSeconds <= 20) {
-            TimerViewController().TimerLabel.textColor = UIColor.systemRed
-            TimerViewController().anxietyLabel.textColor = UIColor.systemRed
+            TimerLabel?.textColor = UIColor.systemRed
+            anxietyLabel?.textColor = UIColor.systemRed
         }
     }
+    /*
+    @objc func updateScoreText() {
+        scoreLabel?.text = "\(global.score)"
+        TimerLabel?.text = timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
+        if global.isTimerRunning == false {
+            runTimer()
+        }
+        TimerViewController().viewWillAppear(true)
+    }
+ */
     
     @objc func runTimer() {
-        global.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimerViewController().updateTimer)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(self.updateTimer)), userInfo: nil, repeats: true)
     }
     
     func timeString(time:TimeInterval) -> String {
