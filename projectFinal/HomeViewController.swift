@@ -11,10 +11,9 @@ import UIKit
 class HomeViewController: UIViewController {
 
     @IBOutlet weak var welcomeLabel: UILabel!
-    @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var homeScoreLabel: UILabel!
-    @IBOutlet weak var homeScoreNumberLabel: UILabel!
+    var nameCheck:String = ""
+
 /*
     func showSomeViewController() {
         self.performSegue(withIdentifier: "timerSegue", sender: self);
@@ -29,32 +28,86 @@ class HomeViewController: UIViewController {
         }
     }
 */
+    func darkModeActions() {
+            tabBarController?.tabBar.barStyle = .black
+            tabBarController?.overrideUserInterfaceStyle = .dark
+            overrideUserInterfaceStyle = .dark
+            view.setNeedsDisplay()
+    }
+
+    func lightModeActions() {
+            tabBarController?.tabBar.barStyle = .default
+            tabBarController?.overrideUserInterfaceStyle = .light
+            overrideUserInterfaceStyle = .light
+            view.setNeedsDisplay()
+    }
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
         super.viewDidLoad()
         /*var localToken = global.defaults.string(forKey: "playerName")*/
         let defaults = UserDefaults.standard
-        global.token = defaults.string(forKey: "playerName") ?? ""
+        let nameCheck = defaults.string(forKey: "playerName")
+        print("\(String(describing: nameCheck))")
         global.hsToken = defaults.integer(forKey: "highScore")
+        global.darkMode = defaults.bool(forKey: "darkMode")
         global.areQuestionsDone = false
-        if(global.token == "") || (global.token == nil) {
-            //introScreen()
+        if(global.darkMode == true) {
+            darkModeActions()
+        }
+        else {
+            lightModeActions()
+        }
+        if(nameCheck == "") || (nameCheck == nil) {
             performSegue(withIdentifier: "SignUpSegue", sender: self)
         }
         else {
+            global.token = nameCheck!
             welcomeLabel.text = "Welcome, \(String(describing: global.token))"
-            homeScoreNumberLabel.text = "\(global.hsToken)"
-            TimerViewController().timerReset()
+            QuizViewController().timerReset()
         }
+
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        //let defaults = UserDefaults.standard
+        let defaults = UserDefaults.standard
+        let nameCheck = defaults.string(forKey: "playerName")
+        print("\(String(describing: nameCheck))")
+        global.hsToken = defaults.integer(forKey: "highScore")
+        global.darkMode = defaults.bool(forKey: "darkMode")
+        global.areQuestionsDone = false
+        if(global.darkMode == true) {
+            darkModeActions()
+        }
+        else {
+            lightModeActions()
+        }
+        if(nameCheck == "") || (nameCheck == nil) {
+            performSegue(withIdentifier: "SignUpSegue", sender: self)
+        }
+        else {
+            global.token = nameCheck!
+            welcomeLabel.text = "Welcome, \(String(describing: global.token))"
+            QuizViewController().timerReset()
+        }
+        
     }
 
     /* BUTTON ACTIONS */
     
     @IBAction func playButtonAction(_ sender: Any) {
         //questionScreen()
-        TimerViewController().timerReset()
+        QuizViewController().timerReset()
         global.score = 0
+        global.questionLabelNumber = 0
+        global.questionNumber = 0
+        global.scoreQuestionNumber = 0
+        global.scoreQuestionCorrect = 0
+        global.scoreQuestionWrong = 0
+        global.scoreTypeButton = 0
+        global.scoreTypeSlider = 0
+        global.scoreTypePicture = 0
+        global.scoreTypePicker = 0
+        global.scoreTypeCharacter = 0
         global.questionLabelNumber = 0
         global.questionNumber = 0
         global.areQuestionsDone = false
@@ -62,16 +115,6 @@ class HomeViewController: UIViewController {
         performSegue(withIdentifier: "QuizSegue", sender: self)
     }
     
-    
-    @IBAction func resetButtonAction(_ sender: Any) {
-        global.token = ""
-        global.hsToken = 0
-        //SignUpViewController().nameTextField.text = ""
-        let defaults = UserDefaults.standard
-        defaults.set(global.token, forKey: "playerName")
-        defaults.set(global.hsToken, forKey: "highScore")
-        performSegue(withIdentifier: "SignUpSegue", sender: self)
-    }
 
     
 

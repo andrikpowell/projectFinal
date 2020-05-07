@@ -35,8 +35,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults = UserDefaults.standard
         let defaultValue = ["playerName" : " "]
         let defaultScore = ["highScore" : 0 ]
+        let defaultScoreNumber = ["highScoreNumber" : 0 ]
+        let defaultScoreCorrect = ["highScoreCorrect" : 0 ]
+        let defaultScoreWrong = ["highScoreWrong" : 0 ]
+        let defaultScoreTypeP = ["highScoreTypeP" : 0 ]
+        let defaultScoreTypePK = ["highScoreTypePK" : 0 ]
+        let defaultScoreTypeB = ["highScoreTypeB" : 0 ]
+        let defaultScoreTypeS = ["highScoreTypeS" : 0 ]
+        let defaultScoreTypeC = ["highScoreTypeC" : 0 ]
+        let defaultDarkMode = ["darkMode" : false ]
         defaults.register(defaults: defaultValue)
         defaults.register(defaults: defaultScore)
+        defaults.register(defaults: defaultScoreNumber)
+        defaults.register(defaults: defaultScoreCorrect)
+        defaults.register(defaults: defaultScoreWrong)
+        defaults.register(defaults: defaultScoreTypeC)
+        defaults.register(defaults: defaultScoreTypeS)
+        defaults.register(defaults: defaultScoreTypeB)
+        defaults.register(defaults: defaultScoreTypeP)
+        defaults.register(defaults: defaultScoreTypePK)
+        defaults.register(defaults: defaultDarkMode)
+
         /*
         let hsDefaults = UserDefaults.standard
         let hsDefaultValue = ["highScore" : 30]

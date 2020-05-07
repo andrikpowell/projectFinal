@@ -8,7 +8,17 @@
 
 import UIKit
 
+protocol ContainerToMaster {
+    func changeLabel(text:String)
+}
+
 class TimerViewController: UIViewController {
+    
+    var containerToMaster:ContainerToMaster?
+    
+    func changeLabel(text: String) {
+        scoreLabel?.text = text
+    }
     
     var timer = Timer()
 
@@ -16,6 +26,7 @@ class TimerViewController: UIViewController {
     @IBOutlet weak var anxietyLabel: UILabel?
     @IBOutlet weak var scoreLabel: UILabel?
     @IBOutlet weak var scoreTextLabel: UILabel?
+    var localScore:Int = 0
     //var tmpString: String!
     
     override func viewDidLoad() {
@@ -23,12 +34,15 @@ class TimerViewController: UIViewController {
         /*if global.isTimerRunning==false {
             runTimer()
         }*/
+        localScore = global.score
     }
     override func viewDidAppear(_ animated: Bool) {
         if global.isTimerRunning==false {
             runTimer()
         }
-        scoreLabel?.text = "\(global.score)"
+        localScore = global.score
+        scoreLabel?.text = "\(localScore)"
+        //containerToMaster?.changeLabel(text: "\(localScore)")
         TimerLabel?.text = "1:20"
     }
     
@@ -39,7 +53,10 @@ class TimerViewController: UIViewController {
     
     func updateScoreLabel() {
         viewWillAppear(true)
-        scoreLabel?.text = "\(global.score)"
+        localScore = global.score
+        print(localScore)
+        scoreLabel?.text = "\(localScore)"
+        //containerToMaster?.changeLabel(text: "\(localScore)")
         print(global.score)
     }
     

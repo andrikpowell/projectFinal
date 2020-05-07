@@ -31,12 +31,31 @@ class SignUpViewController: UIViewController {
         global.score = 0
         global.token = ""
         global.hsToken = 0
+        global.scoreTypeCharacter = 0
+        global.scoreTypePicture = 0
+        global.scoreTypeSlider = 0
+        global.scoreTypeButton = 0
+        global.scoreQuestionWrong = 0
+        global.scoreQuestionCorrect = 0
+        global.scoreQuestionNumber = 0
+        if global.darkMode == true {
+            lightModeActions()
+        }
+        global.darkMode = false
         TimerViewController().timerReset()
         nameTextField.text = ""
         let defaults = UserDefaults.standard
-        defaults.set(global.token, forKey: "playerName")
+        defaults.set("", forKey: "playerName")
         defaults.set(global.hsToken, forKey: "highScore")
-
+        defaults.set(global.darkMode, forKey: "darkMode")
+        defaults.set(global.scoreQuestionNumber, forKey: "highScoreNumber")
+        defaults.set(global.scoreQuestionCorrect, forKey: "highScoreCorrect")
+        defaults.set(global.scoreQuestionWrong, forKey: "highScoreWrong")
+        defaults.set(global.scoreTypePicture, forKey: "highScoreTypeP")
+        defaults.set(global.scoreTypePicker, forKey: "highScoreTypePK")
+        defaults.set(global.scoreTypeSlider, forKey: "highScoreTypeS")
+        defaults.set(global.scoreTypeButton, forKey: "highScoreTypeB")
+        defaults.set(global.scoreTypeCharacter, forKey: "highScoreTypeC")
     }
     
     @IBAction func nameButtonActionSU(_ sender: Any) {
@@ -54,6 +73,14 @@ class SignUpViewController: UIViewController {
             performSegue(withIdentifier: "HomeSegue", sender: self)
         }
     }
+
+    func lightModeActions() {
+            tabBarController?.tabBar.barStyle = .default
+            tabBarController?.overrideUserInterfaceStyle = .light
+            overrideUserInterfaceStyle = .light
+            view.setNeedsDisplay()
+    }
+    
 
 
     

@@ -8,8 +8,22 @@
 
 import UIKit
 
-class QuizViewController: UIViewController {
+class QuizViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    /*func changeLabel(text: String) {
+        objTimerViewController?.localScore = global.score
+    }*/
+    /*
+    @IBOutlet var containerView: UIView!
+    var objTimerViewController: TimerViewController?
     
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "TimerSegue" {
+            objTimerViewController = segue.destination as? TimerViewController
+            objTimerViewController!.containerToMaster = self
+        }
+    }
+ */
+
     /* OUTLETS */
         var chars:Int = 0
         var nature1 = false
@@ -20,6 +34,7 @@ class QuizViewController: UIViewController {
         var q3button2 = false
         var q3button3 = false
         var q3button4 = false
+        var pickerVar = String()
         
     /* OUTLETS */
 
@@ -41,6 +56,7 @@ class QuizViewController: UIViewController {
         @IBOutlet weak var q2redButton: UIButton!
         @IBOutlet weak var q2blueButton: UIButton!
         @IBOutlet weak var q4textField: UITextField!
+        @IBOutlet weak var q6picker: UIPickerView!
       
         /* UPON APP LOAD */
             override func viewDidLoad() {
@@ -55,6 +71,13 @@ class QuizViewController: UIViewController {
                 q1nature2BG.addGestureRecognizer(tap2)
                 q1nature3BG.addGestureRecognizer(tap3)
                 q1nature4BG.addGestureRecognizer(tap4)
+                
+                if(global.darkMode == true) {
+                           darkModeActions()
+                       }
+                       else {
+                           lightModeActions()
+                       }
 
         /* TRYING TO FIGURE OUT HOW TO DO RANDOM QUESTIONS
 
@@ -72,22 +95,120 @@ class QuizViewController: UIViewController {
             
          */
             }
+    
+       var timer = Timer()
+
+       @IBOutlet weak var TimerLabel: UILabel!
+       @IBOutlet weak var anxietyLabel: UILabel!
+       @IBOutlet weak var scoreLabel: UILabel!
+       @IBOutlet weak var scoreTextLabel: UILabel!
+       var localScore:Int = 0
+       //var tmpString: String!
+       
+       func timerReset() {
+           global.timerSeconds = 80
+           //TimerLabel.textColor = UIColor.black
+       }
+       
+       func updateScoreLabel() {
+           viewWillAppear(true)
+           localScore = global.score
+           scoreLabel.text = "\(localScore)"
+           //containerToMaster?.changeLabel(text: "\(localScore)")
+       }
+       
+       /* SCORE FUNCTION */
+           
+       func didScore(points:Int){
+           global.score += points
+           updateScoreLabel()
+          }
+
+       @objc func updateTimer() {
+           //viewWillAppear(true)
+           global.timerSeconds -= 1     //This will decrement(count down)the seconds.
+           TimerLabel.text = timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
+           if(global.timerSeconds == 0) {
+               timer.invalidate()
+            tryAgainScreen()
+               /*
+               if Q1ViewController().isBeingPresented {
+                   performSegue(withIdentifier: "ResultsSegue", sender: Q1ViewController())
+               }
+               else if Q2ViewController().isBeingPresented {
+               performSegue(withIdentifier: "ResultsSegue", sender: self)
+               }
+               else if Q3ViewController().isBeingPresented {
+               performSegue(withIdentifier: "ResultsSegue", sender: self)
+               }
+               else if Q4ViewController().isBeingPresented {
+               performSegue(withIdentifier: "ResultsSegue", sender: self)
+               }
+               else if Q5ViewController().isBeingPresented {
+               performSegue(withIdentifier: "ResultsSegue", sender: self)
+               }
+               else {
+                   TimerLabel?.text = "didn't work"
+               }
+    */
+
+           }
+           else if(global.timerSeconds <= 20) {
+               TimerLabel.textColor = UIColor.systemRed
+               anxietyLabel.textColor = UIColor.systemRed
+           }
+       }
+       /*
+       @objc func updateScoreText() {
+           scoreLabel?.text = "\(global.score)"
+           TimerLabel?.text = timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
+           if global.isTimerRunning == false {
+               runTimer()
+           }
+           TimerViewController().viewWillAppear(true)
+       }
+    */
+       
+       @objc func runTimer() {
+           timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(self.updateTimer)), userInfo: nil, repeats: true)
+       }
+       
+       func timeString(time:TimeInterval) -> String {
+           //let hours = Int(time) / 3600
+           let minutes = Int(time) / 60 % 60
+           let seconds = Int(time) % 60
+           return String(format:"%2i:%02i", minutes, seconds)
+       }
 
     
     
     override func viewDidAppear(_ animated: Bool) {
-        TimerViewController().timerReset()
-        //global.score = 0
-        global.questionLabelNumber = 0
-        global.questionNumber = 0
+        timerReset()
+        global.score = 0
         global.areQuestionsDone = false
         //TimerViewController().updateScoreLabel()
-        global.objTimerViewController?.TimerLabel?.text = global.objTimerViewController?.timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
+        TimerLabel.text = timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
         if global.isTimerRunning == false {
-            global.objTimerViewController?.runTimer()
+            runTimer()
         }
         nextQuestion()
+        
+        localScore = global.score
+        scoreLabel.text = "\(localScore)"
+        //containerToMaster?.changeLabel(text: "\(localScore)")
+        TimerLabel.text = "1:20"
+        q6picker.delegate = self
+        q6picker.dataSource = self
     }
+    
+    func darkModeActions() {
+            overrideUserInterfaceStyle = .dark
+    }
+
+    func lightModeActions() {
+            overrideUserInterfaceStyle = .light
+    }
+
         
     /* QUESTION 1 SWITCHES*/
         
@@ -173,18 +294,21 @@ class QuizViewController: UIViewController {
         @IBAction func q2purpleButtonAction(_ sender: UIButton) {
             if(global.questionNumber == 3) {
                 wrongAnswer()
+                nextQuestion()
             }
             else if(global.questionNumber == 5) {
                 wrongAnswer()
+                nextQuestion()
             }
 
         }
         @IBAction func q2greenButtonAction(_ sender: UIButton) {
             if(global.questionNumber == 3) {
                 wrongAnswer()
+                nextQuestion()
             }
             else if(global.questionNumber == 5) {
-                TimerViewController().didScore(points:10)
+                global.scoreTypeButton += 1
                 nextQuestion()
                 correctAnswer()
             }
@@ -193,21 +317,24 @@ class QuizViewController: UIViewController {
         @IBAction func q2redButtonAction(_ sender: UIButton) {
             if(global.questionNumber == 3) {
                 wrongAnswer()
+                nextQuestion()
             }
             else if(global.questionNumber == 5) {
                 wrongAnswer()
+                nextQuestion()
             }
 
         }
         
         @IBAction func q2blueButtonAction(_ sender: UIButton) {
             if(global.questionNumber == 3) {
-                TimerViewController().didScore(points:10)
-                nextQuestion()
+                global.scoreTypeButton += 1
                 correctAnswer()
+                nextQuestion()
             }
             else if(global.questionNumber == 5) {
                 wrongAnswer()
+                nextQuestion()
             }
         }
         
@@ -228,31 +355,6 @@ class QuizViewController: UIViewController {
             })
         }
 
-    /* TIMER CODE */
-        
-        func timeString(time:TimeInterval) -> String {
-        //let hours = Int(time) / 3600
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
-        return String(format:"%2i:%02i", minutes, seconds)
-        }
-        func runTimer() {
-            global.objTimerViewController?.timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(TimerViewController.updateTimer)), userInfo: nil, repeats: true)
-        }
-        
-        @objc func updateTimer() {
-            global.timerSeconds -= 1     //This will decrement(count down)the seconds.
-            global.objTimerViewController?.TimerLabel?.text = timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
-            if(global.timerSeconds == 0) {
-                global.objTimerViewController?.timer.invalidate()
-                tryAgainScreen()
-            }
-            else if(global.timerSeconds <= 20) {
-                global.objTimerViewController?.TimerLabel?.textColor = UIColor.systemRed
-                //self.anxietyLabel.textColor = UIColor.systemRed
-            }
-    }
-
     /* SLIDER CODE */
 
         var sliderAnswer:Int = 2
@@ -266,6 +368,34 @@ class QuizViewController: UIViewController {
             let roundedValue = round(sender.value / step) * step
             sender.value = roundedValue
         }
+    
+    
+    /* PICKER VIEW */
+    
+    // array to hold your selections
+    let items = ["Dog","Cat","Walrus","Llama","Mouse"]
+        
+    //  variable to evaluate the selection
+    var selection:String!
+    
+    // four functions associated with pickerview
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return items.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return items[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selection = items[row]
+        pickerVar = selection
+        print(pickerVar)
+    }
         
     /* BUTTON SUBMIT - DECIDES WHICH QUESTION TO DO NEXT */
 
@@ -274,26 +404,27 @@ class QuizViewController: UIViewController {
             if(global.questionNumber == 1) {
                 if(nature1 == true && nature2 == true && nature3 == false && nature4 == true)
                 {
-                    TimerViewController().didScore(points:10)
+                    global.scoreTypePicture += 1
                     nextQuestion()
                     correctAnswer()
                 }
                 else
                 {
                     wrongAnswer()
+                    nextQuestion()
                 }
             }
             else if(global.questionNumber == 2) {
                 if(sliderAnswer == 5)
                 {
-                    TimerViewController().didScore(points:10)
                     nextQuestion()
                     correctAnswer()
-
+                    global.scoreTypeSlider += 1
                 }
                 else
                 {
                     wrongAnswer()
+                    nextQuestion()
                 }
             }
                 if(global.questionNumber == 4) {
@@ -301,12 +432,25 @@ class QuizViewController: UIViewController {
                     chars = q4word.count
                     q4textField.resignFirstResponder()
                     if (chars == 6) {
-                        TimerViewController().didScore(points:10)
                         nextQuestion()
+                        global.scoreTypeCharacter += 1
                         correctAnswer()
                     }
                         else {
                         wrongAnswer()
+                        nextQuestion()
+                        }
+
+                }
+                if(global.questionNumber == 6) {
+                    if (pickerVar == "Llama") {
+                        nextQuestion()
+                        global.scoreTypePicker += 1
+                        correctAnswer()
+                    }
+                        else {
+                        wrongAnswer()
+                        nextQuestion()
                         }
 
                 }
@@ -371,29 +515,16 @@ class QuizViewController: UIViewController {
             setView(view: q2blueButton, hidden: false)
             descriptionLabel.text = "Select the button that says GREEN"
         }
-
-
-            
-    /* APP SCREENS */
-        
-/*
-        @objc func questionScreen() {
-            TimerViewController().timerReset()
-            global.score = 0
-            global.questionLabelNumber = 0
-            global.questionNumber = 0
-            global.areQuestionsDone = false
-            global.objTimerViewController?.scoreLabel?.text = "\(global.score)"
-            global.objTimerViewController?.TimerLabel?.text = global.objTimerViewController?.timeString(time: TimeInterval(global.timerSeconds))  //This will update the label.
-            if global.isTimerRunning == false {
-                global.objTimerViewController?.runTimer()
-            }
-            nextQuestion()
+        @objc func question6() {
+            questionClear()
+            global.questionNumber = 6
+            setView(view: q6picker, hidden: false)
+            setView(view: questionSubmitButton, hidden: false)
+            descriptionLabel.text = "Select an animal with a LONG NECK"
         }
- */
         
         func questionClear() {
-            setView(view: questionWrongLabel, hidden: true)
+            //setView(view: questionWrongLabel, hidden: true)
             setView(view: q1nature1Button, hidden: true)
             setView(view: q1nature2Button, hidden: true)
             setView(view: q1nature3Button, hidden: true)
@@ -412,6 +543,10 @@ class QuizViewController: UIViewController {
             setView(view: welcomeLabel, hidden: false)
             setView(view: descriptionLabel, hidden: false)
             setView(view: q4textField, hidden: true)
+            setView(view: q6picker, hidden: true)
+            q6picker.selectRow(0, inComponent: 0, animated: true)
+            selection = "Dog"
+            pickerVar = selection
             q1nature1Button.isSelected = false
             q1nature2Button.isSelected = false
             q1nature3Button.isSelected = false
@@ -436,52 +571,21 @@ class QuizViewController: UIViewController {
         }
         
         @objc func tryAgainScreen() {
-            //questionClear()
-            //global.areQuestionsDone = true
-            //performSegue(withIdentifier: "ResultsSegue", sender: self)
             DispatchQueue.main.async(){
                self.performSegue(withIdentifier: "ResultsSegue", sender: self)
             }
-            //welcomeLabel.text = "Try Again?"
-            //descriptionLabel.text = ""
-            //global.objResultsViewController?.finalScoreNumberLabel.text = "\(global.score)"
-            //let defaults = UserDefaults.standard
-            //global.hsToken = defaults.integer(forKey: "highScore")
-            //if(global.score > global.hsToken) || (global.hsToken == 0) {
-              //  defaults.set(global.score, forKey: "highScore")
-              //  setView(view: objResultsViewController?.MadeHighScoreLabel, hidden: false)
-            //}
-            //else {
-            //    score = 0
-            //    finalHighScoreNumberLabel.text = "High Score: \(hsToken)"
-            //    setView(view: finalHighScoreNumberLabel, hidden: false)
-            //}
-            //setView(view: tryAgainButton, hidden: false)
-            //setView(view: questionSubmitButton, hidden: true)
-            //setView(view: anxietyLabel, hidden: true)
-            //setView(view: scoreTextLabel, hidden: true)
-            //setView(view: scoreLabel, hidden: true)
-            //setView(view: TimerLabel, hidden: true)
-            //setView(view: questionWrongLabel, hidden: true)
-            //setView(view: questionGoodJobLabel, hidden: true)
-            //setView(view: finalScoreLabel, hidden: false)
-            //setView(view: finalScoreNumberLabel, hidden: false)
-            //setView(view: backHomeButton, hidden: false)
         }
-/*
-        @objc func timerReset() {
-            timerSeconds = 80
-            TimerLabel.textColor = UIColor.black
-        }
- */
         
         @objc func wrongAnswer() {
+            global.scoreQuestionWrong += 1
             setView(view: questionWrongLabel, hidden: false)
             Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
                 self.setView(view: self.questionWrongLabel, hidden: true)
             }
         }
         @objc func correctAnswer() {
+            global.scoreQuestionCorrect += 1
+            didScore(points: 10)
             setView(view: questionGoodJobLabel, hidden: false)
             Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
                 self.setView(view: self.questionGoodJobLabel, hidden: true)
@@ -501,51 +605,14 @@ class QuizViewController: UIViewController {
             else if(global.questionNumber == 4) {
                 question5()
             }
+            else if(global.questionNumber == 5) {
+                question6()
+            }
             else {
                 question1()
             }
         }
-        
-    /* BUTTON ACTIONS */
-        /*
-        @IBAction func playButtonAction(_ sender: Any) {
-            questionScreen()
-        }
-        
-        @IBAction func tryAgainAction(_ sender: Any) {
-            questionScreen()
-        }
-        
-        @IBAction func resetButtonAction(_ sender: Any) {
-            token = ""
-            hsToken = 0
-            nameTextField.text = ""
-            let defaults = UserDefaults.standard
-            defaults.set(token, forKey: "playerName")
-            defaults.set(hsToken, forKey: "highScore")
-            introScreen()
-        }
- 
-        @IBAction func nameButtonAction(_ sender: Any) {
-            token = nameTextField.text!
-            nameTextField.resignFirstResponder()
-            if (token == "") {
-                setView(view: nameErrorLabel, hidden: false)
-                Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (pause) in
-                    self.setView(view: self.nameErrorLabel, hidden: true)
-                }
-            }
-            else {
-                let defaults = UserDefaults.standard
-                defaults.set(token, forKey: "playerName")
-                homeScreen()
-            }
-        }
-        @IBAction func backHomeButtonAction(_ sender: Any) {
-            homeScreen()
-        }
- */
-        
+                
         /* RANDOM QUESTIONS */
            /*
             
