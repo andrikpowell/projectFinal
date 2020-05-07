@@ -15,7 +15,20 @@ class ResultsViewController: UIViewController {
     @IBOutlet weak var finalHighScoreNumberLabel: UILabel!
     
     @IBAction func tryAgainAction(_ sender: Any) {
-        performSegue(withIdentifier: "Q1Segue", sender: self)
+        global.score = 0
+        global.questionLabelNumber = 0
+        global.questionNumber = 0
+        global.scoreQuestionNumber = 0
+        global.scoreQuestionCorrect = 0
+        global.scoreQuestionWrong = 0
+        global.scoreTypeButton = 0
+        global.scoreTypeSlider = 0
+        global.scoreTypePicture = 0
+        global.scoreTypePicker = 0
+        global.scoreTypeCharacter = 0
+        global.questionLabelNumber = 0
+        global.questionNumber = 0
+        performSegue(withIdentifier: "QuizSegue", sender: self)
         //questionScreen()
     }
     

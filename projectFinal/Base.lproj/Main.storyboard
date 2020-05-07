@@ -576,6 +576,7 @@
                         <outlet property="finalScoreNumberLabel" destination="kWd-1p-0Qg" id="SfZ-6d-MET"/>
                         <outlet property="welcomeLabel" destination="Ns0-i4-b3s" id="g4x-rb-LJo"/>
                         <segue destination="XAA-ki-24r" kind="show" identifier="HomeSegue" id="SMM-ne-Jyh"/>
+                        <segue destination="LNr-fV-gb4" kind="show" identifier="QuizSegue" id="l1m-gh-l4v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ng9-wX-dgz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -587,7 +588,7 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="whv-Lc-jve" customClass="HomeViewController" customModule="projectFinal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tal-gs-3oD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AC-w3-IbR">
@@ -929,6 +930,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="0gq-P7-EVT"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vKH-sS-jtG">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -947,7 +949,7 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="7no-Ai-NPk" customClass="StatsViewController" customModule="projectFinal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kn7-Aw-voW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="02O-1x-RSO">
@@ -1182,6 +1184,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="SMM-ne-Jyh"/>
+        <segue reference="l1m-gh-l4v"/>
         <segue reference="05C-xP-a4u"/>
     </inferredMetricsTieBreakers>
     <resources>
